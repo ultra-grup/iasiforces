@@ -46,13 +46,13 @@
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <vector>
-#include <stack>
-#include <algorithm>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;stack&gt;
+#include &lt;algorithm&gt;
 using namespace std;
 
-void dfs1(int u, vector<bool> &visited, stack<int> &st, vector<vector<int>> &adj) {
+void dfs1(int u, vector&lt;bool&gt; &visited, stack&lt;int&gt; &st, vector&lt;vector&lt;int&gt;&gt; &adj) {
     visited[u] = true;
     for (int v : adj[u]) {
         if (!visited[v])
@@ -61,7 +61,7 @@ void dfs1(int u, vector<bool> &visited, stack<int> &st, vector<vector<int>> &adj
     st.push(u);
 }
 
-void dfs2(int u, vector<bool> &visited, vector<vector<int>> &adjT) {
+void dfs2(int u, vector&lt;bool&gt; &visited, vector&lt;vector&lt;int&gt;&gt; &adjT) {
     visited[u] = true;
     for (int v : adjT[u]) {
         if (!visited[v])
@@ -73,17 +73,17 @@ int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int n, m; cin >> n >> m;
-    vector<vector<int>> adj(n+1), adjT(n+1);
-    for (int i = 0; i < m; i++){
-        int u, v; cin >> u >> v;
+    int n, m; cin &gt;&gt; n &gt;&gt; m;
+    vector&lt;vector&lt;int&gt;&gt; adj(n+1), adjT(n+1);
+    for (int i = 0; i &lt; m; i++){
+        int u, v; cin &gt;&gt; u &gt;&gt; v;
         adj[u].push_back(v);
         adjT[v].push_back(u);
     }
 
-    stack<int> st;
-    vector<bool> visited(n+1, false);
-    for (int i = 1; i <= n; i++){
+    stack&lt;int&gt; st;
+    vector&lt;bool&gt; visited(n+1, false);
+    for (int i = 1; i &lt;= n; i++){
         if (!visited[i])
             dfs1(i, visited, st, adj);
     }
@@ -97,7 +97,7 @@ int main(){
             scc_count++;
         }
     }
-    cout << scc_count << "\n";
+    cout &lt;&lt; scc_count &lt;&lt; "\n";
     return 0;
 }
 

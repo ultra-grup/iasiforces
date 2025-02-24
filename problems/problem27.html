@@ -42,32 +42,32 @@ YES
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <vector>
-#include <bitset>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;bitset&gt;
 using namespace std;
 
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    int n; cin >> n;
-    vector<int> a(n);
+    int n; cin &gt;&gt; n;
+    vector&lt;int&gt; a(n);
     int sum = 0;
-    for (int i=0; i<n; i++){
-        cin >> a[i];
+    for (int i=0; i&lt;n; i++){
+        cin &gt;&gt; a[i];
         sum += a[i];
     }
     if(sum % 2 != 0){
-        cout << "NO\n";
+        cout &lt;&lt; "NO\n";
         return 0;
     }
     int target = sum/2;
-    bitset<10001> dp;
+    bitset&lt;10001&gt; dp;
     dp[0] = 1;
     for (int x : a) {
-        dp |= dp << x;
+        dp |= dp &lt;&lt; x;
     }
-    cout << (dp[target] ? "YES" : "NO") << "\n";
+    cout &lt;&lt; (dp[target] ? "YES" : "NO") &lt;&lt; "\n";
     return 0;
 }
 

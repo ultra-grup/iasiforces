@@ -41,19 +41,19 @@ ababa
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <vector>
-#include <map>
-#include <string>
-#include <algorithm>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;map&gt;
+#include &lt;string&gt;
+#include &lt;algorithm&gt;
 using namespace std;
 
 struct State {
     int len, link;
-    map<char,int> next;
+    map&lt;char,int&gt; next;
 };
 
-vector<State> st;
+vector&lt;State&gt; st;
 int sz, last;
 
 void sa_init(int n){
@@ -92,15 +92,15 @@ void sa_extend(char c){
 
 int main(){
     string s;
-    cin >> s;
+    cin &gt;&gt; s;
     sa_init(s.size());
     for(char c : s)
         sa_extend(c);
     long long distinct = 0;
-    for (int i = 1; i < sz; i++) {
+    for (int i = 1; i &lt; sz; i++) {
         distinct += st[i].len - st[st[i].link].len;
     }
-    cout << distinct;
+    cout &lt;&lt; distinct;
     return 0;
 }
             </code></pre>

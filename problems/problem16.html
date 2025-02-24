@@ -41,15 +41,15 @@
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <vector>
-#include <stack>
-#include <algorithm>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;stack&gt;
+#include &lt;algorithm&gt;
 using namespace std;
 
 int timeCounter = 0;
 
-void tarjanDFS(int u, const vector<vector<int>> &adj, vector<int> &disc, vector<int> &low, stack<int> &st, vector<bool> &inStack, vector<vector<int>> &scc){
+void tarjanDFS(int u, const vector&lt;vector&lt;int&gt;&gt; &adj, vector&lt;int&gt; &disc, vector&lt;int&gt; &low, stack&lt;int&gt; &st, vector&lt;bool&gt; &inStack, vector&lt;vector&lt;int&gt;&gt; &scc){
     disc[u] = low[u] = ++timeCounter;
     st.push(u); inStack[u] = true;
     for(int v : adj[u]){
@@ -61,7 +61,7 @@ void tarjanDFS(int u, const vector<vector<int>> &adj, vector<int> &disc, vector<
         }
     }
     if(low[u] == disc[u]){
-        vector<int> component;
+        vector&lt;int&gt; component;
         while(true){
             int w = st.top(); st.pop(); inStack[w] = false;
             component.push_back(w);
@@ -73,24 +73,24 @@ void tarjanDFS(int u, const vector<vector<int>> &adj, vector<int> &disc, vector<
 
 int main(){
     int n, m; 
-    cin >> n >> m;
-    vector<vector<int>> adj(n);
-    for(int i=0;i<m;i++){
-        int u, v; cin >> u >> v; u--; v--;
+    cin &gt;&gt; n &gt;&gt; m;
+    vector&lt;vector&lt;int&gt;&gt; adj(n);
+    for(int i=0;i&lt;m;i++){
+        int u, v; cin &gt;&gt; u &gt;&gt; v; u--; v--;
         adj[u].push_back(v);
     }
-    vector<int> disc(n, -1), low(n, -1);
-    vector<bool> inStack(n, false);
-    stack<int> st;
-    vector<vector<int>> scc;
-    for(int i=0;i<n;i++){
+    vector&lt;int&gt; disc(n, -1), low(n, -1);
+    vector&lt;bool&gt; inStack(n, false);
+    stack&lt;int&gt; st;
+    vector&lt;vector&lt;int&gt;&gt; scc;
+    for(int i=0;i&lt;n;i++){
         if(disc[i] == -1)
             tarjanDFS(i, adj, disc, low, st, inStack, scc);
     }
-    cout << scc.size() << "\n";
+    cout &lt;&lt; scc.size() &lt;&lt; "\n";
     for(auto &comp : scc){
-        for(auto v : comp) cout << v+1 << " ";
-        cout << "\n";
+        for(auto v : comp) cout &lt;&lt; v+1 &lt;&lt; " ";
+        cout &lt;&lt; "\n";
     }
     return 0;
 }

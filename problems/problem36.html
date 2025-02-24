@@ -42,20 +42,20 @@
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
 using namespace std;
 
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int n; cin >> n;
-    vector<int> a(n);
-    for(int i = 0; i < n; i++) cin >> a[i];
+    int n; cin &gt;&gt; n;
+    vector&lt;int&gt; a(n);
+    for(int i = 0; i &lt; n; i++) cin &gt;&gt; a[i];
     
-    vector<int> lis;
+    vector&lt;int&gt; lis;
     for (int x : a) {
         auto it = lower_bound(lis.begin(), lis.end(), x);
         if(it == lis.end()) { 
@@ -64,7 +64,7 @@ int main(){
             *it = x;
         }
     }
-    cout << lis.size() << "\n";
+    cout &lt;&lt; lis.size() &lt;&lt; "\n";
     return 0;
 }
 

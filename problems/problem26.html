@@ -45,13 +45,13 @@ NO
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <string>
+#include &lt;iostream&gt;
+#include &lt;string&gt;
 using namespace std;
 
 bool isSubsequence(const string &s, const string &t) {
     int i = 0, j = 0;
-    while (i < s.size() && j < t.size()) {
+    while (i &lt; s.size() && j &lt; t.size()) {
         if (s[i] == t[j]) j++;
         i++;
     }
@@ -63,11 +63,11 @@ int main(){
     cin.tie(nullptr);
     string S; 
     getline(cin, S);
-    int Q; cin >> Q;
+    int Q; cin &gt;&gt; Q;
     while(Q--) {
         string t; 
-        cin >> t;
-        cout << (isSubsequence(S, t) ? "YES" : "NO") << "\n";
+        cin &gt;&gt; t;
+        cout &lt;&lt; (isSubsequence(S, t) ? "YES" : "NO") &lt;&lt; "\n";
     }
     return 0;
 }

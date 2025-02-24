@@ -41,8 +41,8 @@
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <vector>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
 using namespace std;
 
 const int MOD = 1000000007;
@@ -50,17 +50,17 @@ const int MOD = 1000000007;
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    int n, k; cin >> n >> k;
-    vector<vector<int>> dp(n+1, vector<int>(k+1,0));
+    int n, k; cin &gt;&gt; n &gt;&gt; k;
+    vector&lt;vector&lt;int&gt;&gt; dp(n+1, vector&lt;int&gt;(k+1,0));
     dp[0][0] = 1;
-    for(int i = 1; i <= n; i++){
-        for(int j = 0; j <= k; j++){
-            for(int p = 0; p < i && j - p >= 0; p++){
+    for(int i = 1; i &lt;= n; i++){
+        for(int j = 0; j &lt;= k; j++){
+            for(int p = 0; p &lt; i && j - p &gt;= 0; p++){
                 dp[i][j] = (dp[i][j] + dp[i-1][j-p]) % MOD;
             }
         }
     }
-    cout << dp[n][k] << "\n";
+    cout &lt;&lt; dp[n][k] &lt;&lt; "\n";
     return 0;
 }
 

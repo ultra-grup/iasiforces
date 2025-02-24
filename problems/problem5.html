@@ -41,11 +41,11 @@
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <vector>
-#include <queue>
-#include <limits>
-#include <cstring>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;limits&gt;
+#include &lt;cstring&gt;
 using namespace std;
 
 struct Edge {
@@ -56,35 +56,35 @@ const int INF = 1e9;
 
 int main(){
     int n, m, f;
-    cin >> n >> m >> f;
-    vector<vector<Edge>> adj(n);
+    cin &gt;&gt; n &gt;&gt; m &gt;&gt; f;
+    vector&lt;vector&lt;Edge&gt;&gt; adj(n);
     auto addEdge = [&](int u, int v, int cap, int cost){
         Edge a = {v, cap, cost, 0, (int)adj[v].size()};
         Edge b = {u, 0, -cost, 0, (int)adj[u].size()};
         adj[u].push_back(a);
         adj[v].push_back(b);
     };
-    for(int i=0; i<m; i++){
+    for(int i=0; i&lt;m; i++){
         int u, v, cap, cost;
-        cin >> u >> v >> cap >> cost;
+        cin &gt;&gt; u &gt;&gt; v &gt;&gt; cap &gt;&gt; cost;
         addEdge(u, v, cap, cost);
     }
     int s, t;
-    cin >> s >> t;
+    cin &gt;&gt; s &gt;&gt; t;
     int flow = 0, cost = 0;
-    while(flow < f){
-        vector<int> dist(n, INF), parent(n, -1), parentEdge(n, -1);
+    while(flow &lt; f){
+        vector&lt;int&gt; dist(n, INF), parent(n, -1), parentEdge(n, -1);
         dist[s] = 0;
-        vector<bool> inQueue(n, false);
-        queue<int> q;
+        vector&lt;bool&gt; inQueue(n, false);
+        queue&lt;int&gt; q;
         q.push(s);
         inQueue[s] = true;
         while(!q.empty()){
             int u = q.front(); q.pop();
             inQueue[u] = false;
-            for(int i=0; i<adj[u].size(); i++){
+            for(int i=0; i&lt;adj[u].size(); i++){
                 Edge &e = adj[u][i];
-                if(e.capacity - e.flow > 0 && dist[e.v] > dist[u] + e.cost){
+                if(e.capacity - e.flow &gt; 0 && dist[e.v] &gt; dist[u] + e.cost){
                     dist[e.v] = dist[u] + e.cost;
                     parent[e.v] = u;
                     parentEdge[e.v] = i;
@@ -108,8 +108,8 @@ int main(){
         flow += push_flow;
         cost += push_flow * dist[t];
     }
-    if(flow < f) cout << -1;
-    else cout << cost;
+    if(flow &lt; f) cout &lt;&lt; -1;
+    else cout &lt;&lt; cost;
     return 0;
 }
             </code></pre>

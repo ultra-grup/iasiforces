@@ -41,13 +41,13 @@ aab
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <string>
-#include <vector>
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
 using namespace std;
 
 bool isPalindrome(const string &s, int i, int j) {
-    while(i < j){
+    while(i &lt; j){
         if(s[i] != s[j]) return false;
         i++; j--;
     }
@@ -58,17 +58,17 @@ int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    string s; cin >> s;
+    string s; cin &gt;&gt; s;
     int n = s.size();
-    vector<int> cuts(n, 0);
-    vector<vector<bool>> pal(n, vector<bool>(n, false));
+    vector&lt;int&gt; cuts(n, 0);
+    vector&lt;vector&lt;bool&gt;&gt; pal(n, vector&lt;bool&gt;(n, false));
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i &lt; n; i++) {
         pal[i][i] = true;
     }
 
-    for (int len = 2; len <= n; len++){
-        for (int i = 0; i <= n - len; i++){
+    for (int len = 2; len &lt;= n; len++){
+        for (int i = 0; i &lt;= n - len; i++){
             int j = i + len - 1;
             if(s[i] == s[j]) {
                 pal[i][j] = (len == 2) ? true : pal[i+1][j-1];
@@ -76,19 +76,19 @@ int main(){
         }
     }
 
-    for (int i = 0; i < n; i++){
+    for (int i = 0; i &lt; n; i++){
         if(pal[0][i]) {
             cuts[i] = 0;
         } else {
             int minCut = i;
-            for (int j = 0; j < i; j++){
-                if(pal[j+1][i] && 1 + cuts[j] < minCut)
+            for (int j = 0; j &lt; i; j++){
+                if(pal[j+1][i] && 1 + cuts[j] &lt; minCut)
                     minCut = 1 + cuts[j];
             }
             cuts[i] = minCut;
         }
     }
-    cout << cuts[n-1] << "\n";
+    cout &lt;&lt; cuts[n-1] &lt;&lt; "\n";
     return 0;
 }
 

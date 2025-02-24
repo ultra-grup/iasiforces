@@ -41,28 +41,28 @@
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <vector>
-#include <stack>
-#include <algorithm>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;stack&gt;
+#include &lt;algorithm&gt;
 using namespace std;
 
 int main(){
     int n, m; 
-    cin >> n >> m;
-    vector<vector<int>> adj(n+1);
-    vector<int> outdeg(n+1,0), indeg(n+1,0);
-    for(int i=0;i<m;i++){
-        int u,v; cin >> u >> v;
+    cin &gt;&gt; n &gt;&gt; m;
+    vector&lt;vector&lt;int&gt;&gt; adj(n+1);
+    vector&lt;int&gt; outdeg(n+1,0), indeg(n+1,0);
+    for(int i=0;i&lt;m;i++){
+        int u,v; cin &gt;&gt; u &gt;&gt; v;
         adj[u].push_back(v);
         outdeg[u]++; indeg[v]++;
     }
     int start = 1;
-    for(int i=1;i<=n;i++){
+    for(int i=1;i&lt;=n;i++){
         if(outdeg[i]-indeg[i]==1) {start = i; break;}
     }
-    stack<int> st;
-    vector<int> path;
+    stack&lt;int&gt; st;
+    vector&lt;int&gt; path;
     st.push(start);
     while(!st.empty()){
         int u = st.top();
@@ -77,9 +77,9 @@ int main(){
     }
     reverse(path.begin(), path.end());
     if(path.size() != m+1){
-        cout << "No Eulerian Path";
+        cout &lt;&lt; "No Eulerian Path";
     } else {
-        for(auto v : path) cout << v << " ";
+        for(auto v : path) cout &lt;&lt; v &lt;&lt; " ";
     }
     return 0;
 }

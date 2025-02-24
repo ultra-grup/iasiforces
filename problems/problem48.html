@@ -20,7 +20,7 @@
     <main>
         <section class="problem-statement">
             <h2>Problem 48: Travelling Salesman Problem</h2>
-            <p><strong>Problem Statement:</strong> Given a complete directed graph with n nodes (n <= 16) and a cost matrix, compute the minimum tour cost that visits every node exactly once and returns to the starting node.</p>
+            <p><strong>Problem Statement:</strong> Given a complete directed graph with n nodes (n &lt;= 16) and a cost matrix, compute the minimum tour cost that visits every node exactly once and returns to the starting node.</p>
             
             <h3>Input</h3>
             <p>The first line contains an integer n. Each of the next n lines contains n space-separated integers representing the cost matrix.</p>
@@ -45,10 +45,10 @@
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <limits>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+#include &lt;limits&gt;
 using namespace std;
 
 const int INF = 1e9;
@@ -57,24 +57,24 @@ int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int n; cin >> n;
-    vector<vector<int>> cost(n, vector<int>(n));
-    for (int i = 0; i < n; i++){
-        for (int j = 0; j < n; j++){
-            cin >> cost[i][j];
+    int n; cin &gt;&gt; n;
+    vector&lt;vector&lt;int&gt;&gt; cost(n, vector&lt;int&gt;(n));
+    for (int i = 0; i &lt; n; i++){
+        for (int j = 0; j &lt; n; j++){
+            cin &gt;&gt; cost[i][j];
         }
     }
     
-    int N = 1 << n;
-    vector<vector<int>> dp(N, vector<int>(n, INF));
+    int N = 1 &lt;&lt; n;
+    vector&lt;vector&lt;int&gt;&gt; dp(N, vector&lt;int&gt;(n, INF));
     dp[1][0] = 0;
     
-    for (int mask = 1; mask < N; mask++){
-        for (int i = 0; i < n; i++){
-            if(mask & (1 << i)){
-                for (int j = 0; j < n; j++){
-                    if(!(mask & (1 << j))) {
-                        dp[mask | (1 << j)][j] = min(dp[mask | (1 << j)][j], dp[mask][i] + cost[i][j]);
+    for (int mask = 1; mask &lt; N; mask++){
+        for (int i = 0; i &lt; n; i++){
+            if(mask & (1 &lt;&lt; i)){
+                for (int j = 0; j &lt; n; j++){
+                    if(!(mask & (1 &lt;&lt; j))) {
+                        dp[mask | (1 &lt;&lt; j)][j] = min(dp[mask | (1 &lt;&lt; j)][j], dp[mask][i] + cost[i][j]);
                     }
                 }
             }
@@ -82,10 +82,10 @@ int main(){
     }
     
     int ans = INF;
-    for (int i = 0; i < n; i++){
+    for (int i = 0; i &lt; n; i++){
         ans = min(ans, dp[N-1][i] + cost[i][0]);
     }
-    cout << ans << "\n";
+    cout &lt;&lt; ans &lt;&lt; "\n";
     return 0;
 }
 

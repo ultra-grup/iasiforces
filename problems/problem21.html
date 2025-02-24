@@ -45,14 +45,14 @@
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <bits/stdc++.h>
+#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int n;
-vector<int> adj[200005];
+vector&lt;int&gt; adj[200005];
 
-pair<int,int> dfs(int u, int parent) {
-    pair<int,int> res = {0, u};
+pair&lt;int,int&gt; dfs(int u, int parent) {
+    pair&lt;int,int&gt; res = {0, u};
     for (int v : adj[u]) {
         if(v==parent) continue;
         auto p = dfs(v, u);
@@ -65,15 +65,15 @@ pair<int,int> dfs(int u, int parent) {
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    cin >> n;
-    for (int i = 1; i < n; i++){
-        int u,v; cin >> u >> v;
+    cin &gt;&gt; n;
+    for (int i = 1; i &lt; n; i++){
+        int u,v; cin &gt;&gt; u &gt;&gt; v;
         adj[u].push_back(v);
         adj[v].push_back(u);
     }
     auto p1 = dfs(1, -1);
     auto p2 = dfs(p1.second, -1);
-    cout << p2.first << "\n";
+    cout &lt;&lt; p2.first &lt;&lt; "\n";
     return 0;
 }
 

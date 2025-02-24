@@ -41,8 +41,8 @@
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <vector>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
 using namespace std;
 
 struct Node{
@@ -54,41 +54,41 @@ struct Node{
 
 int n;
 
-Node* build(int l, int r, vector<int>& arr){
+Node* build(int l, int r, vector&lt;int&gt;& arr){
     if(l == r) return new Node(arr[l], NULL, NULL);
     int mid = (l+r)/2;
     Node* left = build(l, mid, arr);
     Node* right = build(mid+1, r, arr);
-    return new Node(left->sum + right->sum, left, right);
+    return new Node(left-&gt;sum + right-&gt;sum, left, right);
 }
 
 Node* update(Node* prev, int l, int r, int pos, int val){
-    if(l > pos || r < pos) return prev;
+    if(l &gt; pos || r &lt; pos) return prev;
     if(l==r) return new Node(val, NULL, NULL);
     int mid = (l+r)/2;
-    Node* left = update(prev->left, l, mid, pos, val);
-    Node* right = update(prev->right, mid+1, r, pos, val);
-    return new Node(left->sum + right->sum, left, right);
+    Node* left = update(prev-&gt;left, l, mid, pos, val);
+    Node* right = update(prev-&gt;right, mid+1, r, pos, val);
+    return new Node(left-&gt;sum + right-&gt;sum, left, right);
 }
 
 int query(Node* root, int l, int r, int ql, int qr){
-    if(ql>r || qr<l) return 0;
-    if(ql<=l && r<=qr) return root->sum;
+    if(ql&gt;r || qr&lt;l) return 0;
+    if(ql&lt;=l && r&lt;=qr) return root-&gt;sum;
     int mid = (l+r)/2;
-    return query(root->left, l, mid, ql, qr) + query(root->right, mid+1, r, ql, qr);
+    return query(root-&gt;left, l, mid, ql, qr) + query(root-&gt;right, mid+1, r, ql, qr);
 }
 
 int main(){
     int q;
-    cin >> n >> q;
-    vector<int> arr(n);
-    for(int i=0;i<n;i++) cin >> arr[i];
-    vector<Node*> version;
+    cin &gt;&gt; n &gt;&gt; q;
+    vector&lt;int&gt; arr(n);
+    for(int i=0;i&lt;n;i++) cin &gt;&gt; arr[i];
+    vector&lt;Node*&gt; version;
     version.push_back(build(0, n-1, arr));
     while(q--){
         int ver, l, r;
-        cin >> ver >> l >> r; // 0-indexed
-        cout << query(version[ver], 0, n-1, l, r-1) << "\n";
+        cin &gt;&gt; ver &gt;&gt; l &gt;&gt; r; // 0-indexed
+        cout &lt;&lt; query(version[ver], 0, n-1, l, r-1) &lt;&lt; "\n";
     }
     return 0;
 }

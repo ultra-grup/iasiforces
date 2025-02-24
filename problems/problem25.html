@@ -46,33 +46,33 @@
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
 using namespace std;
 
 struct Edge {
     int u, v, w;
-    bool operator<(const Edge &other) const {
-        return w < other.w;
+    bool operator&lt;(const Edge &other) const {
+        return w &lt; other.w;
     }
 };
 
-int findp(int a, vector<int>& parent){
+int findp(int a, vector&lt;int&gt;& parent){
     return parent[a] == a ? a : parent[a] = findp(parent[a], parent);
 }
 
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    int n, m; cin >> n >> m;
-    vector<Edge> edges(m);
-    for (int i = 0; i < m; i++){
-        cin >> edges[i].u >> edges[i].v >> edges[i].w;
+    int n, m; cin &gt;&gt; n &gt;&gt; m;
+    vector&lt;Edge&gt; edges(m);
+    for (int i = 0; i &lt; m; i++){
+        cin &gt;&gt; edges[i].u &gt;&gt; edges[i].v &gt;&gt; edges[i].w;
     }
     sort(edges.begin(), edges.end());
-    vector<int> parent(n+1);
-    for(int i=1; i<=n; i++) parent[i]=i;
+    vector&lt;int&gt; parent(n+1);
+    for(int i=1; i&lt;=n; i++) parent[i]=i;
     long long cost = 0;
     for(auto &e : edges){
         int pu = findp(e.u, parent);
@@ -82,7 +82,7 @@ int main(){
             parent[pu] = pv;
         }
     }
-    cout << cost << "\n";
+    cout &lt;&lt; cost &lt;&lt; "\n";
     return 0;
 }
 

@@ -46,9 +46,9 @@
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <vector>
-#include <queue>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
 using namespace std;
 
 const int MOD = 1000000007;
@@ -57,20 +57,20 @@ int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int n, m; cin >> n >> m;
-    vector<vector<int>> adj(n+1);
-    vector<int> indegree(n+1, 0);
-    for(int i = 0; i < m; i++){
-        int u, v; cin >> u >> v;
+    int n, m; cin &gt;&gt; n &gt;&gt; m;
+    vector&lt;vector&lt;int&gt;&gt; adj(n+1);
+    vector&lt;int&gt; indegree(n+1, 0);
+    for(int i = 0; i &lt; m; i++){
+        int u, v; cin &gt;&gt; u &gt;&gt; v;
         adj[u].push_back(v);
         indegree[v]++;
     }
     
-    vector<int> dp(n+1, 0);
+    vector&lt;int&gt; dp(n+1, 0);
     dp[1] = 1;
     
-    queue<int> q;
-    for(int i = 1; i <= n; i++){
+    queue&lt;int&gt; q;
+    for(int i = 1; i &lt;= n; i++){
         if(indegree[i] == 0) q.push(i);
     }
     
@@ -83,7 +83,7 @@ int main(){
         }
     }
     
-    cout << dp[n] << "\n";
+    cout &lt;&lt; dp[n] &lt;&lt; "\n";
     return 0;
 }
 

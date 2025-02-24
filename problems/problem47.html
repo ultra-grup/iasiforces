@@ -46,11 +46,11 @@
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <vector>
-#include <queue>
-#include <climits>
-#include <algorithm>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;climits&gt;
+#include &lt;algorithm&gt;
 using namespace std;
 
 struct Edge {
@@ -62,9 +62,9 @@ int main(){
     cin.tie(nullptr);
 
     int n, m, s, t; 
-    cin >> n >> m >> s >> t;
-    vector<Edge> edges;
-    vector<vector<int>> adj(n+1);
+    cin &gt;&gt; n &gt;&gt; m &gt;&gt; s &gt;&gt; t;
+    vector&lt;Edge&gt; edges;
+    vector&lt;vector&lt;int&gt;&gt; adj(n+1);
 
     auto addEdge = [&](int u, int v, int cap){
         Edge e = {u, v, cap, 0};
@@ -75,23 +75,23 @@ int main(){
         edges.push_back(red);
     };
 
-    for (int i=0;i<m;i++){
-        int u, v, cap; cin >> u >> v >> cap;
+    for (int i=0;i&lt;m;i++){
+        int u, v, cap; cin &gt;&gt; u &gt;&gt; v &gt;&gt; cap;
         addEdge(u, v, cap);
     }
     
     int maxFlow = 0;
     while(true){
-        vector<int> parent(n+1, -1);
-        vector<int> edgeIndex(n+1, -1);
-        queue<int> q;
+        vector&lt;int&gt; parent(n+1, -1);
+        vector&lt;int&gt; edgeIndex(n+1, -1);
+        queue&lt;int&gt; q;
         q.push(s);
         parent[s] = s;
         while(!q.empty() && parent[t]==-1){
             int u = q.front(); q.pop();
             for (int idx : adj[u]){
                 Edge &e = edges[idx];
-                if(parent[e.v]==-1 && e.cap - e.flow > 0){
+                if(parent[e.v]==-1 && e.cap - e.flow &gt; 0){
                     parent[e.v] = u;
                     edgeIndex[e.v] = idx;
                     q.push(e.v);
@@ -111,7 +111,7 @@ int main(){
         }
         maxFlow += pushFlow;
     }
-    cout << maxFlow << "\n";
+    cout &lt;&lt; maxFlow &lt;&lt; "\n";
     return 0;
 }
 

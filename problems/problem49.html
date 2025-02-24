@@ -43,11 +43,11 @@
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <vector>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
 using namespace std;
 
-int findp(int a, vector<int> &parent){
+int findp(int a, vector&lt;int&gt; &parent){
     return parent[a] == a ? a : parent[a] = findp(parent[a], parent);
 }
 
@@ -55,12 +55,12 @@ int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     
-    int n, m; cin >> n >> m;
-    vector<int> parent(n+1);
-    for (int i = 1; i <= n; i++) parent[i] = i;
+    int n, m; cin &gt;&gt; n &gt;&gt; m;
+    vector&lt;int&gt; parent(n+1);
+    for (int i = 1; i &lt;= n; i++) parent[i] = i;
     
-    for(int i = 0; i < m; i++){
-        int u, v; cin >> u >> v;
+    for(int i = 0; i &lt; m; i++){
+        int u, v; cin &gt;&gt; u &gt;&gt; v;
         int pu = findp(u, parent);
         int pv = findp(v, parent);
         if(pu != pv){
@@ -69,10 +69,10 @@ int main(){
     }
     
     int count = 0;
-    for(int i = 1; i <= n; i++){
+    for(int i = 1; i &lt;= n; i++){
         if(findp(i, parent) == i) count++;
     }
-    cout << count << "\n";
+    cout &lt;&lt; count &lt;&lt; "\n";
     return 0;
 }
 

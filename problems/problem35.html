@@ -42,23 +42,23 @@
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <vector>
-#include <map>
-#include <numeric>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;map&gt;
+#include &lt;numeric&gt;
 using namespace std;
 
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    int n; cin >> n;
-    vector<int> a(n);
-    for (int i=0;i<n;i++) cin >> a[i];
+    int n; cin &gt;&gt; n;
+    vector&lt;int&gt; a(n);
+    for (int i=0;i&lt;n;i++) cin &gt;&gt; a[i];
     long long ans = 0;
-    // map: gcd_value -> count of subarrays ending at current index
-    map<int, int> prev;
-    for (int i=0;i<n;i++){
-        map<int,int> curr;
+    // map: gcd_value -&gt; count of subarrays ending at current index
+    map&lt;int, int&gt; prev;
+    for (int i=0;i&lt;n;i++){
+        map&lt;int,int&gt; curr;
         curr[a[i]]++;
         for(auto &p: prev) {
             int g = gcd(p.first, a[i]);
@@ -67,7 +67,7 @@ int main(){
         ans += curr[1];
         prev = curr;
     }
-    cout << ans << "\n";
+    cout &lt;&lt; ans &lt;&lt; "\n";
     return 0;
 }
 

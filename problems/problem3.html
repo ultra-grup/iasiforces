@@ -41,8 +41,8 @@
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <vector>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
 using namespace std;
 
 const long long MOD = 1000000007;
@@ -53,9 +53,9 @@ struct Matrix {
 
 Matrix mul(const Matrix &A, const Matrix &B){
     Matrix C = {{{0,0},{0,0}}};
-    for(int i=0;i<2;i++){
-        for(int j=0;j<2;j++){
-            for(int k=0;k<2;k++){
+    for(int i=0;i&lt;2;i++){
+        for(int j=0;j&lt;2;j++){
+            for(int k=0;k&lt;2;k++){
                 C.m[i][j] = (C.m[i][j] + A.m[i][k]*B.m[k][j]) % MOD;
             }
         }
@@ -74,11 +74,11 @@ Matrix power(Matrix A, long long n){
 }
 
 int main(){
-    long long n; cin >> n;
-    if(n == 0) { cout << 0; return 0; }
+    long long n; cin &gt;&gt; n;
+    if(n == 0) { cout &lt;&lt; 0; return 0; }
     Matrix F = {{{1,1},{1,0}}};
     F = power(F, n-1);
-    cout << F.m[0][0];
+    cout &lt;&lt; F.m[0][0];
     return 0;
 }
             </code></pre>

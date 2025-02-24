@@ -47,10 +47,10 @@
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <vector>
-#include <queue>
-#include <limits>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;limits&gt;
 using namespace std;
 
 typedef long long ll;
@@ -60,16 +60,16 @@ int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int n, m; cin >> n >> m;
-    vector<vector<pair<int, int>>> adj(n+1);
-    for(int i = 0; i < m; i++){
-        int u, v, w; cin >> u >> v >> w;
+    int n, m; cin &gt;&gt; n &gt;&gt; m;
+    vector&lt;vector&lt;pair&lt;int, int&gt;&gt;&gt; adj(n+1);
+    for(int i = 0; i &lt; m; i++){
+        int u, v, w; cin &gt;&gt; u &gt;&gt; v &gt;&gt; w;
         adj[u].push_back({v, w});
     }
     
-    vector<ll> dist(n+1, INF);
+    vector&lt;ll&gt; dist(n+1, INF);
     dist[1] = 0;
-    priority_queue<pair<ll,int>, vector<pair<ll,int>>, greater<pair<ll,int>>>pq;
+    priority_queue&lt;pair&lt;ll,int&gt;, vector&lt;pair&lt;ll,int&gt;&gt;, greater&lt;pair&lt;ll,int&gt;&gt;&gt;pq;
     pq.push({0, 1});
     
     while(!pq.empty()){
@@ -78,17 +78,17 @@ int main(){
         for(auto &edge: adj[u]){
             int v = edge.first;
             int w = edge.second;
-            if(dist[u] + w < dist[v]){
+            if(dist[u] + w &lt; dist[v]){
                 dist[v] = dist[u] + w;
                 pq.push({dist[v], v});
             }
         }
     }
     
-    for(int i = 1; i <= n; i++){
-        cout << (dist[i] == INF ? -1 : dist[i]) << " ";
+    for(int i = 1; i &lt;= n; i++){
+        cout &lt;&lt; (dist[i] == INF ? -1 : dist[i]) &lt;&lt; " ";
     }
-    cout << "\n";
+    cout &lt;&lt; "\n";
     return 0;
 }
 

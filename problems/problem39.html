@@ -42,31 +42,31 @@
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <vector>
-#include <unordered_map>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;unordered_map&gt;
 using namespace std;
 
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int n, k; cin >> n >> k;
-    vector<int> a(n);
-    for (int i=0; i<n; i++) cin >> a[i];
+    int n, k; cin &gt;&gt; n &gt;&gt; k;
+    vector&lt;int&gt; a(n);
+    for (int i=0; i&lt;n; i++) cin &gt;&gt; a[i];
 
-    unordered_map<int, long long> mp;
+    unordered_map&lt;int, long long&gt; mp;
     mp[0] = 1;
     int prefix = 0; 
     long long ans = 0;
-    for (int i=0; i<n; i++){
+    for (int i=0; i&lt;n; i++){
         prefix += a[i];
         if(mp.find(prefix - k) != mp.end()) {
             ans += mp[prefix - k];
         }
         mp[prefix]++;
     }
-    cout << ans << "\n";
+    cout &lt;&lt; ans &lt;&lt; "\n";
     return 0;
 }
 

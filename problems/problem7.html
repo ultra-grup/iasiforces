@@ -41,25 +41,25 @@ YES
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <vector>
-#include <stack>
-#include <algorithm>
-#include <cmath>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;stack&gt;
+#include &lt;algorithm&gt;
+#include &lt;cmath&gt;
 using namespace std;
 
 int var(int x, int n){
-    return (x > 0) ? x - 1 : n - x - 1;
+    return (x &gt; 0) ? x - 1 : n - x - 1;
 }
 
-void addEdge(int u, int v, vector<vector<int>> &g){
+void addEdge(int u, int v, vector&lt;vector&lt;int&gt;&gt; &g){
     g[u].push_back(v);
 }
 
 int main(){
     int n, m;
-    cin >> n >> m;
-    vector<vector<int>> g(2*n), gr(2*n);
+    cin &gt;&gt; n &gt;&gt; m;
+    vector&lt;vector&lt;int&gt;&gt; g(2*n), gr(2*n);
     auto add_clause = [&](int a, int b){
         int u = var(-a, n), v = var(b, n);
         int u2 = var(-b, n), v2 = var(a, n);
@@ -67,36 +67,36 @@ int main(){
         addEdge(u2, v2, g); addEdge(v2, u2, gr);
     };
     int a, b;
-    for(int i=0;i<m;i++){
-        cin >> a >> b;
+    for(int i=0;i&lt;m;i++){
+        cin &gt;&gt; a &gt;&gt; b;
         add_clause(a, b);
     }
     // Kosaraju
-    vector<bool> used(2*n, false);
-    vector<int> order, comp(2*n);
-    function<void(int)> dfs1 = [&](int v){
+    vector&lt;bool&gt; used(2*n, false);
+    vector&lt;int&gt; order, comp(2*n);
+    function&lt;void(int)&gt; dfs1 = [&](int v){
         used[v] = true;
         for(auto u : g[v]) if(!used[u]) dfs1(u);
         order.push_back(v);
     };
-    for(int i=0;i<2*n;i++) if(!used[i]) dfs1(i);
-    function<void(int,int)> dfs2 = [&](int v, int cl){
+    for(int i=0;i&lt;2*n;i++) if(!used[i]) dfs1(i);
+    function&lt;void(int,int)&gt; dfs2 = [&](int v, int cl){
         comp[v] = cl;
         for(auto u : gr[v]) if(comp[u]==-1) dfs2(u, cl);
     };
     fill(comp.begin(), comp.end(), -1);
     int idx = 0;
-    for(int i = 2*n-1; i>=0; i--){
+    for(int i = 2*n-1; i&gt;=0; i--){
         int v = order[i];
         if(comp[v] == -1) dfs2(v, idx++);
     }
-    for(int i=0;i<n;i++){
+    for(int i=0;i&lt;n;i++){
         if(comp[i] == comp[i+n]){
-            cout << "NO";
+            cout &lt;&lt; "NO";
             return 0;
         }
     }
-    cout << "YES";
+    cout &lt;&lt; "YES";
     return 0;
 }
             </code></pre>

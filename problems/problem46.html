@@ -41,27 +41,27 @@ banana
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <vector>
-#include <string>
-#include <algorithm>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;string&gt;
+#include &lt;algorithm&gt;
 using namespace std;
 
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    string s; cin >> s;
+    string s; cin &gt;&gt; s;
     int n = s.size();
-    vector<int> sa(n);
-    for (int i = 0; i < n; i++) sa[i] = i;
+    vector&lt;int&gt; sa(n);
+    for (int i = 0; i &lt; n; i++) sa[i] = i;
     
     sort(sa.begin(), sa.end(), [&s](int i, int j){
-        return s.substr(i) < s.substr(j);
+        return s.substr(i) &lt; s.substr(j);
     });
     
-    for (int i = 0; i < n; i++)
-        cout << sa[i] << (i < n-1 ? " " : "\n");
+    for (int i = 0; i &lt; n; i++)
+        cout &lt;&lt; sa[i] &lt;&lt; (i &lt; n-1 ? " " : "\n");
     return 0;
 }
 

@@ -41,18 +41,18 @@
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <vector>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
 using namespace std;
 
 struct SegmentTree{
     int n;
-    vector<long long> tree, lazy;
+    vector&lt;long long&gt; tree, lazy;
     SegmentTree(int n): n(n) {
         tree.assign(4*n, 0);
         lazy.assign(4*n, 0);
     }
-    void build(vector<int>& arr, int idx, int l, int r){
+    void build(vector&lt;int&gt;& arr, int idx, int l, int r){
         if(l == r){
             tree[idx] = arr[l]; return;
         }
@@ -70,8 +70,8 @@ struct SegmentTree{
             }
             lazy[idx] = 0;
         }
-        if(r < ql || l > qr) return;
-        if(ql <= l && r <= qr){
+        if(r &lt; ql || l &gt; qr) return;
+        if(ql &lt;= l && r &lt;= qr){
             tree[idx] += (r-l+1)*val;
             if(l != r){
                 lazy[2*idx] += val;
@@ -93,8 +93,8 @@ struct SegmentTree{
             }
             lazy[idx] = 0;
         }
-        if(r < ql || l > qr) return 0;
-        if(ql <= l && r <= qr) return tree[idx];
+        if(r &lt; ql || l &gt; qr) return 0;
+        if(ql &lt;= l && r &lt;= qr) return tree[idx];
         int mid = (l+r)/2;
         return query(2*idx, l, mid, ql, qr) + query(2*idx+1, mid+1, r, ql, qr);
     }
@@ -102,22 +102,22 @@ struct SegmentTree{
 
 int main(){
     int n, q;
-    cin >> n >> q;
-    vector<int> arr(n);
-    for(int i=0;i<n;i++) cin >> arr[i];
+    cin &gt;&gt; n &gt;&gt; q;
+    vector&lt;int&gt; arr(n);
+    for(int i=0;i&lt;n;i++) cin &gt;&gt; arr[i];
     SegmentTree st(n);
     st.build(arr, 1, 0, n-1);
     while(q--) {
         string op;
-        cin >> op;
+        cin &gt;&gt; op;
         if(op == "update"){
             int l, r, v;
-            cin >> l >> r >> v;
+            cin &gt;&gt; l &gt;&gt; r &gt;&gt; v;
             st.update(1, 0, n-1, l, r, v);
         } else {
             int l, r;
-            cin >> l >> r;
-            cout << st.query(1, 0, n-1, l, r) << "\n";
+            cin &gt;&gt; l &gt;&gt; r;
+            cout &lt;&lt; st.query(1, 0, n-1, l, r) &lt;&lt; "\n";
         }
     }
     return 0;

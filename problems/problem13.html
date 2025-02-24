@@ -42,11 +42,11 @@
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
 // Due to complexity, this is a simplified outline.
-#include <bits/stdc++.h>
+#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 const int N = 100005;
-vector<int> adj[N];
+vector&lt;int&gt; adj[N];
 int parent[N], depth[N], heavy[N], head[N], pos[N], curPos;
 int seg[4*N];
 
@@ -57,7 +57,7 @@ int dfs(int u, int p){
     for (int v: adj[u]){
         if(v==p) continue;
         int subSize = dfs(v, u);
-        if(subSize > maxSize) { maxSize = subSize; heavy[u] = v; }
+        if(subSize &gt; maxSize) { maxSize = subSize; heavy[u] = v; }
         size += subSize;
     }
     return size;
@@ -82,8 +82,8 @@ void buildSeg(int idx, int l, int r){
 }
 
 int querySeg(int idx, int l, int r, int ql, int qr){
-    if(ql>r || qr<l)return 0;
-    if(ql<=l && r<=qr)return seg[idx];
+    if(ql&gt;r || qr&lt;l)return 0;
+    if(ql&lt;=l && r&lt;=qr)return seg[idx];
     int mid = (l+r)/2;
     return querySeg(2*idx, l, mid, ql, qr) + querySeg(2*idx+1, mid+1, r, ql, qr);
 }
@@ -91,20 +91,20 @@ int querySeg(int idx, int l, int r, int ql, int qr){
 int queryPath(int u, int v, int n){
     int res=0;
     while(head[u]!=head[v]){
-        if(depth[head[u]] > depth[head[v]]) swap(u,v);
+        if(depth[head[u]] &gt; depth[head[v]]) swap(u,v);
         res += querySeg(1, 0, n-1, pos[head[v]], pos[v]);
         v = parent[head[v]];
     }
-    if(depth[u] > depth[v]) swap(u,v);
+    if(depth[u] &gt; depth[v]) swap(u,v);
     res += querySeg(1, 0, n-1, pos[u], pos[v]);
     return res;
 }
 
 int main(){
-    int n, q; cin >> n >> q;
-    for(int i=1;i<=n;i++) { adj[i].clear(); }
-    for(int i=1;i<n;i++){
-        int u,v; cin >> u >> v;
+    int n, q; cin &gt;&gt; n &gt;&gt; q;
+    for(int i=1;i&lt;=n;i++) { adj[i].clear(); }
+    for(int i=1;i&lt;n;i++){
+        int u,v; cin &gt;&gt; u &gt;&gt; v;
         adj[u].push_back(v); adj[v].push_back(u);
     }
     curPos=0;
@@ -112,8 +112,8 @@ int main(){
     decompose(1,1);
     buildSeg(1, 0, n-1);
     while(q--){
-        int u,v; cin >> u >> v;
-        cout << queryPath(u,v,n) << "\n";
+        int u,v; cin &gt;&gt; u &gt;&gt; v;
+        cout &lt;&lt; queryPath(u,v,n) &lt;&lt; "\n";
     }
     return 0;
 }

@@ -41,8 +41,8 @@
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <string>
+#include &lt;iostream&gt;
+#include &lt;string&gt;
 using namespace std;
 
 const long long MOD = 1000000007;
@@ -50,19 +50,19 @@ const long long MOD = 1000000007;
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    string s; cin >> s;
+    string s; cin &gt;&gt; s;
     long long n = s.size();
     long long sum = 0, f = 1;
     long long res = 0;
     // f[i] stores contribution factor for digit at index i from right end
     // We use reverse iteration.
-    for (int i = n - 1; i >= 0; i--) {
+    for (int i = n - 1; i &gt;= 0; i--) {
         int digit = s[i] - '0';
         sum = (sum + (long long)(i + 1) * f) % MOD;
         res = (res + digit * sum) % MOD;
         f = (f * 10 + 1) % MOD;
     }
-    cout << res % MOD << "\n";
+    cout &lt;&lt; res % MOD &lt;&lt; "\n";
     return 0;
 }
 

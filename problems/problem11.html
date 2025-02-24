@@ -41,10 +41,10 @@ AGGTAB\nGXTXAYB
         <section class="solution">
             <h2>Solution in C++</h2>
             <pre><code class="language-cpp">
-#include <iostream>
-#include <vector>
-#include <string>
-#include <algorithm>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;string&gt;
+#include &lt;algorithm&gt;
 using namespace std;
 
 int main(){
@@ -52,16 +52,16 @@ int main(){
     getline(cin, s1);
     getline(cin, s2);
     int n = s1.size(), m = s2.size();
-    vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
-    for(int i=1;i<=n;i++){
-        for(int j=1;j<=m;j++){
+    vector&lt;vector&lt;int&gt;&gt; dp(n+1, vector&lt;int&gt;(m+1, 0));
+    for(int i=1;i&lt;=n;i++){
+        for(int j=1;j&lt;=m;j++){
             if(s1[i-1] == s2[j-1])
                 dp[i][j] = dp[i-1][j-1] + 1;
             else
                 dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
         }
     }
-    cout << dp[n][m];
+    cout &lt;&lt; dp[n][m];
     return 0;
 }
             </code></pre>
