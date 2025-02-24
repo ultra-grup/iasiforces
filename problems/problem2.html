@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Problem 2: Convex Hull - UAIC CP</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- Google Fonts for Retro Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>UAIC Competitive Programming</h1>
+        <nav>
+            <a href="../index.html">Home</a> 
+        </nav>
+    </header>
+    
+    <main>
+        <section class="problem-statement">
+            <h2>Problem 2: Convex Hull</h2>
+            <p><strong>Problem Statement:</strong> Given a set of 2D points, compute the convex hull using Graham's scan algorithm.</p>
+            
+            <h3>Input</h3>
+            <p>The first line contains an integer n, the number of points. Each of the next n lines contains two integers x and y.</p>
+            
+            <h3>Output</h3>
+            <p>Print the vertices of the convex hull in counterclockwise order starting from the vertex with the lowest y-coordinate.</p>
+            
+            <h3>Examples</h3>
+            <pre><code class="language-text">
+<strong>Input:</strong>
+6
+0 0
+1 1
+2 2
+0 2
+2 0
+1 -1
+
+<strong>Output:</strong>
+1 -1\n2 0\n2 2\n0 2\n0 0
+            </code></pre>
+        </section>
+        
+        <section class="solution">
+            <h2>Solution in C++</h2>
+            <pre><code class="language-cpp">
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+struct Point {
+    int x, y;
+};
+
+Point pivot;
+
+int orientation(const Point &a, const Point &b, const Point &c) {
+    int val = (b.y - a.y) * (c.x - b.x) - (b.x - a.x) * (c.y - b.y);
+    if(val == 0) return 0;
+    return (val > 0) ? 1 : 2;
+}
+
+bool compare(Point a, Point b) {
+    int o = orientation(pivot, a, b);
+    if(o == 0) {
+        return ( (pivot.x - a.x)*(pivot.x - a.x) + (pivot.y - a.y)*(pivot.y - a.y)) <
+               ( (pivot.x - b.x)*(pivot.x - b.x) + (pivot.y - b.y)*(pivot.y - b.y));
+    }
+    return o == 2;
+}
+
+int main(){
+    int n;
+    cin >> n;
+    vector<Point> pts(n);
+    for (int i = 0; i < n; i++) {
+        cin >> pts[i].x >> pts[i].y;
+    }
+    int minY = pts[0].y, id = 0;
+    for (int i = 1; i < n; i++) {
+        if(pts[i].y < minY || (pts[i].y == minY && pts[i].x < pts[id].x)){
+            minY = pts[i].y;
+            id = i;
+        }
+    }
+    swap(pts[0], pts[id]);
+    pivot = pts[0];
+    sort(pts.begin() + 1, pts.end(), compare);
+    vector<Point> hull;
+    hull.push_back(pts[0]);
+    hull.push_back(pts[1]);
+    for (int i = 2; i < n; i++) {
+        while(hull.size() > 1 && orientation(hull[hull.size()-2], hull[hull.size()-1], pts[i]) != 2){
+            hull.pop_back();
+        }
+        hull.push_back(pts[i]);
+    }
+    for(auto p : hull) {
+        cout << p.x << " " << p.y << "\n";
+    }
+    return 0;
+}
+            </code></pre>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Competitive Programming Blog</p>
+    </footer>
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-cpp.min.js"></script>
+</body>
+</html>

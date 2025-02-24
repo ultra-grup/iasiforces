@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+    background-color: #f4f0e6;
+    color: #333;
+    font-family: 'Press Start 2P', cursive;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #6a4f4b;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+nav a {
+    color: #ffde59;
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+main {
+    padding: 20px;
+}
+
+h1, h2, h3 {
+    font-family: 'Lucida Console', Monaco, monospace;
+}
+
+ul.problem-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul.problem-list li {
+    margin: 10px 0;
+}
+
+ul.problem-list a {
+    color: #6a4f4b;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+ul.problem-list a:hover {
+    text-decoration: underline;
+}
+
+.problem-statement, .solution {
+    background-color: #fff;
+    border: 2px solid #6a4f4b;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+pre {
+    background-color: #2d2d2d;
+    color: #f8f8f2;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+footer {
+    background-color: #6a4f4b;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    font-size: 12px;
+}
+ 
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    
+    header, footer {
+        padding: 10px;
+    }
+    
+    .problem-statement, .solution {
+        padding: 10px;
+    }
+    
+    ul.problem-list a {
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Problem 17: Hungarian Algorithm for Assignment Problem - UAIC CP</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- Google Fonts for Retro Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>UAIC Competitive Programming</h1>
+        <nav>
+            <a href="../index.html">Home</a> 
+        </nav>
+    </header>
+    
+    <main>
+        <section class="problem-statement">
+            <h2>Problem 17: Hungarian Algorithm for Assignment Problem</h2>
+            <p><strong>Problem Statement:</strong> Given a cost matrix for n workers and n tasks, compute the minimum cost assignment using the Hungarian algorithm.</p>
+            
+            <h3>Input</h3>
+            <p>First line contains n. The following n lines each contain n integers representing the cost matrix.</p>
+            
+            <h3>Output</h3>
+            <p>Print the minimum cost assignment.</p>
+            
+            <h3>Examples</h3>
+            <pre><code class="language-text">
+<strong>Input:</strong>
+3\n9 2 7\n6 4 3\n5 8 1
+
+<strong>Output:</strong>
+10
+            </code></pre>
+        </section>
+        
+        <section class="solution">
+            <h2>Solution in C++</h2>
+            <pre><code class="language-cpp">
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main(){
+    int n; cin >> n;
+    vector<vector<int>> cost(n, vector<int>(n));
+    for(int i=0; i<n; i++){
+        for(int j=0;j<n;j++)
+            cin >> cost[i][j];
+    }
+    vector<int> u(n+1), v(n+1), p(n+1), way(n+1);
+    for(int i=1;i<=n;i++){
+        p[0] = i;
+        int j0 = 0;
+        vector<int> minv(n+1, 1e9);
+        vector<char> used(n+1, false);
+        do{
+            used[j0] = true;
+            int i0 = p[j0], delta = 1e9, j1 = 0;
+            for (int j=1;j<=n;j++){
+                if(!used[j]){
+                    int cur = cost[i0-1][j-1] - u[i0] - v[j];
+                    if(cur < minv[j]) { minv[j] = cur; way[j] = j0; }
+                    if(minv[j] < delta) { delta = minv[j]; j1 = j; }
+                }
+            }
+            for(int j=0;j<=n;j++){
+                if(used[j]) { u[p[j]] += delta; v[j] -= delta; } else { minv[j] -= delta; }
+            }
+            j0 = j1;
+        } while(p[j0]!=0);
+        do{
+            int j1 = way[j0];
+            p[j0] = p[j1];
+            j0 = j1;
+        } while(j0);
+    }
+    cout << -v[0];
+    return 0;
+}
+            </code></pre>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Competitive Programming Blog</p>
+    </footer>
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-cpp.min.js"></script>
+</body>
+</html>

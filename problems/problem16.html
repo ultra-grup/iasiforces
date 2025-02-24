@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Problem 16: Tarjan's Strongly Connected Components - UAIC CP</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- Google Fonts for Retro Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>UAIC Competitive Programming</h1>
+        <nav>
+            <a href="../index.html">Home</a> 
+        </nav>
+    </header>
+    
+    <main>
+        <section class="problem-statement">
+            <h2>Problem 16: Tarjan's Strongly Connected Components</h2>
+            <p><strong>Problem Statement:</strong> Given a directed graph, find its strongly connected components using Tarjan's algorithm.</p>
+            
+            <h3>Input</h3>
+            <p>First line contains n and m. Next m lines contain two integers u and v representing an edge from u to v.</p>
+            
+            <h3>Output</h3>
+            <p>Output the number of strongly connected components followed by each component's vertices.</p>
+            
+            <h3>Examples</h3>
+            <pre><code class="language-text">
+<strong>Input:</strong>
+5 5\n1 2\n2 3\n3 1\n4 5\n5 4
+
+<strong>Output:</strong>
+2\n1 2 3\n4 5
+            </code></pre>
+        </section>
+        
+        <section class="solution">
+            <h2>Solution in C++</h2>
+            <pre><code class="language-cpp">
+#include <iostream>
+#include <vector>
+#include <stack>
+#include <algorithm>
+using namespace std;
+
+int timeCounter = 0;
+
+void tarjanDFS(int u, const vector<vector<int>> &adj, vector<int> &disc, vector<int> &low, stack<int> &st, vector<bool> &inStack, vector<vector<int>> &scc){
+    disc[u] = low[u] = ++timeCounter;
+    st.push(u); inStack[u] = true;
+    for(int v : adj[u]){
+        if(disc[v] == -1){
+            tarjanDFS(v, adj, disc, low, st, inStack, scc);
+            low[u] = min(low[u], low[v]);
+        } else if(inStack[v]) {
+            low[u] = min(low[u], disc[v]);
+        }
+    }
+    if(low[u] == disc[u]){
+        vector<int> component;
+        while(true){
+            int w = st.top(); st.pop(); inStack[w] = false;
+            component.push_back(w);
+            if(w == u) break;
+        }
+        scc.push_back(component);
+    }
+}
+
+int main(){
+    int n, m; 
+    cin >> n >> m;
+    vector<vector<int>> adj(n);
+    for(int i=0;i<m;i++){
+        int u, v; cin >> u >> v; u--; v--;
+        adj[u].push_back(v);
+    }
+    vector<int> disc(n, -1), low(n, -1);
+    vector<bool> inStack(n, false);
+    stack<int> st;
+    vector<vector<int>> scc;
+    for(int i=0;i<n;i++){
+        if(disc[i] == -1)
+            tarjanDFS(i, adj, disc, low, st, inStack, scc);
+    }
+    cout << scc.size() << "\n";
+    for(auto &comp : scc){
+        for(auto v : comp) cout << v+1 << " ";
+        cout << "\n";
+    }
+    return 0;
+}
+            </code></pre>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Competitive Programming Blog</p>
+    </footer>
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-cpp.min.js"></script>
+</body>
+</html>

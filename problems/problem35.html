@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Problem 35: Subarray GCD 1 - UAIC CP</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- Google Fonts for Retro Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>UAIC Competitive Programming</h1>
+        <nav>
+            <a href="../index.html">Home</a> 
+        </nav>
+    </header>
+    
+    <main>
+        <section class="problem-statement">
+            <h2>Problem 35: Subarray GCD 1</h2>
+            <p><strong>Problem Statement:</strong> Given an array of n positive integers, count the number of subarrays whose greatest common divisor (GCD) is 1.</p>
+            
+            <h3>Input</h3>
+            <p>The first line contains the integer n. The second line contains n space-separated integers.</p>
+            
+            <h3>Output</h3>
+            <p>Print the count of subarrays with GCD equal to 1.</p>
+            
+            <h3>Examples</h3>
+            <pre><code class="language-text">
+<strong>Input:</strong>
+4
+2 4 3 6
+
+<strong>Output:</strong>
+4
+            </code></pre>
+        </section>
+        
+        <section class="solution">
+            <h2>Solution in C++</h2>
+            <pre><code class="language-cpp">
+#include <iostream>
+#include <vector>
+#include <map>
+#include <numeric>
+using namespace std;
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int n; cin >> n;
+    vector<int> a(n);
+    for (int i=0;i<n;i++) cin >> a[i];
+    long long ans = 0;
+    // map: gcd_value -> count of subarrays ending at current index
+    map<int, int> prev;
+    for (int i=0;i<n;i++){
+        map<int,int> curr;
+        curr[a[i]]++;
+        for(auto &p: prev) {
+            int g = gcd(p.first, a[i]);
+            curr[g] += p.second;
+        }
+        ans += curr[1];
+        prev = curr;
+    }
+    cout << ans << "\n";
+    return 0;
+}
+
+            </code></pre>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Competitive Programming Blog</p>
+    </footer>
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-cpp.min.js"></script>
+</body>
+</html>

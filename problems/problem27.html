@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Problem 27: Equal Sum Partition - UAIC CP</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- Google Fonts for Retro Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>UAIC Competitive Programming</h1>
+        <nav>
+            <a href="../index.html">Home</a> 
+        </nav>
+    </header>
+    
+    <main>
+        <section class="problem-statement">
+            <h2>Problem 27: Equal Sum Partition</h2>
+            <p><strong>Problem Statement:</strong> Given an array of n positive integers, determine if it is possible to partition the array into two subsets such that the sum of the elements in both subsets is equal.</p>
+            
+            <h3>Input</h3>
+            <p>The first line contains the integer n. The next line contains n space-separated integers.</p>
+            
+            <h3>Output</h3>
+            <p>Print "YES" if such a partition exists, otherwise print "NO".</p>
+            
+            <h3>Examples</h3>
+            <pre><code class="language-text">
+<strong>Input:</strong>
+4
+1 5 11 5
+
+<strong>Output:</strong>
+YES
+            </code></pre>
+        </section>
+        
+        <section class="solution">
+            <h2>Solution in C++</h2>
+            <pre><code class="language-cpp">
+#include <iostream>
+#include <vector>
+#include <bitset>
+using namespace std;
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int n; cin >> n;
+    vector<int> a(n);
+    int sum = 0;
+    for (int i=0; i<n; i++){
+        cin >> a[i];
+        sum += a[i];
+    }
+    if(sum % 2 != 0){
+        cout << "NO\n";
+        return 0;
+    }
+    int target = sum/2;
+    bitset<10001> dp;
+    dp[0] = 1;
+    for (int x : a) {
+        dp |= dp << x;
+    }
+    cout << (dp[target] ? "YES" : "NO") << "\n";
+    return 0;
+}
+
+            </code></pre>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Competitive Programming Blog</p>
+    </footer>
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-cpp.min.js"></script>
+</body>
+</html>

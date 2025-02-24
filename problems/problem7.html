@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Problem 7: 2-SAT Problem - UAIC CP</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- Google Fonts for Retro Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>UAIC Competitive Programming</h1>
+        <nav>
+            <a href="../index.html">Home</a> 
+        </nav>
+    </header>
+    
+    <main>
+        <section class="problem-statement">
+            <h2>Problem 7: 2-SAT Problem</h2>
+            <p><strong>Problem Statement:</strong> Given a 2-SAT problem with n variables and m clauses, determine if there exists an assignment that satisfies all clauses.</p>
+            
+            <h3>Input</h3>
+            <p>First line contains n and m. Each of the next m lines contain two integers a and b representing a clause (a OR b), where a and b can be negative indicating negation.</p>
+            
+            <h3>Output</h3>
+            <p>Print "YES" if a satisfying assignment exists, otherwise print "NO".</p>
+            
+            <h3>Examples</h3>
+            <pre><code class="language-text">
+<strong>Input:</strong>
+2 3\n1 2\n-1 2\n-1 -2
+
+<strong>Output:</strong>
+YES
+            </code></pre>
+        </section>
+        
+        <section class="solution">
+            <h2>Solution in C++</h2>
+            <pre><code class="language-cpp">
+#include <iostream>
+#include <vector>
+#include <stack>
+#include <algorithm>
+#include <cmath>
+using namespace std;
+
+int var(int x, int n){
+    return (x > 0) ? x - 1 : n - x - 1;
+}
+
+void addEdge(int u, int v, vector<vector<int>> &g){
+    g[u].push_back(v);
+}
+
+int main(){
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> g(2*n), gr(2*n);
+    auto add_clause = [&](int a, int b){
+        int u = var(-a, n), v = var(b, n);
+        int u2 = var(-b, n), v2 = var(a, n);
+        addEdge(u, v, g); addEdge(v, u, gr);
+        addEdge(u2, v2, g); addEdge(v2, u2, gr);
+    };
+    int a, b;
+    for(int i=0;i<m;i++){
+        cin >> a >> b;
+        add_clause(a, b);
+    }
+    // Kosaraju
+    vector<bool> used(2*n, false);
+    vector<int> order, comp(2*n);
+    function<void(int)> dfs1 = [&](int v){
+        used[v] = true;
+        for(auto u : g[v]) if(!used[u]) dfs1(u);
+        order.push_back(v);
+    };
+    for(int i=0;i<2*n;i++) if(!used[i]) dfs1(i);
+    function<void(int,int)> dfs2 = [&](int v, int cl){
+        comp[v] = cl;
+        for(auto u : gr[v]) if(comp[u]==-1) dfs2(u, cl);
+    };
+    fill(comp.begin(), comp.end(), -1);
+    int idx = 0;
+    for(int i = 2*n-1; i>=0; i--){
+        int v = order[i];
+        if(comp[v] == -1) dfs2(v, idx++);
+    }
+    for(int i=0;i<n;i++){
+        if(comp[i] == comp[i+n]){
+            cout << "NO";
+            return 0;
+        }
+    }
+    cout << "YES";
+    return 0;
+}
+            </code></pre>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Competitive Programming Blog</p>
+    </footer>
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-cpp.min.js"></script>
+</body>
+</html>

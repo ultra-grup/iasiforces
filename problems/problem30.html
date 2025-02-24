@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Problem 30: Sum of Substrings - UAIC CP</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- Google Fonts for Retro Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>UAIC Competitive Programming</h1>
+        <nav>
+            <a href="../index.html">Home</a> 
+        </nav>
+    </header>
+    
+    <main>
+        <section class="problem-statement">
+            <h2>Problem 30: Sum of Substrings</h2>
+            <p><strong>Problem Statement:</strong> Given a numeric string, compute the sum of all possible substrings of the string taken as numbers. Since the answer can be very large, output it modulo 10^9+7.</p>
+            
+            <h3>Input</h3>
+            <p>A single line containing a numeric string.</p>
+            
+            <h3>Output</h3>
+            <p>Print the sum of all substrings modulo 10^9+7.</p>
+            
+            <h3>Examples</h3>
+            <pre><code class="language-text">
+<strong>Input:</strong>
+16
+
+<strong>Output:</strong>
+23
+            </code></pre>
+        </section>
+        
+        <section class="solution">
+            <h2>Solution in C++</h2>
+            <pre><code class="language-cpp">
+#include <iostream>
+#include <string>
+using namespace std;
+
+const long long MOD = 1000000007;
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    string s; cin >> s;
+    long long n = s.size();
+    long long sum = 0, f = 1;
+    long long res = 0;
+    // f[i] stores contribution factor for digit at index i from right end
+    // We use reverse iteration.
+    for (int i = n - 1; i >= 0; i--) {
+        int digit = s[i] - '0';
+        sum = (sum + (long long)(i + 1) * f) % MOD;
+        res = (res + digit * sum) % MOD;
+        f = (f * 10 + 1) % MOD;
+    }
+    cout << res % MOD << "\n";
+    return 0;
+}
+
+            </code></pre>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Competitive Programming Blog</p>
+    </footer>
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-cpp.min.js"></script>
+</body>
+</html>

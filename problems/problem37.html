@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Problem 37: Count Paths in DAG - UAIC CP</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- Google Fonts for Retro Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>UAIC Competitive Programming</h1>
+        <nav>
+            <a href="../index.html">Home</a> 
+        </nav>
+    </header>
+    
+    <main>
+        <section class="problem-statement">
+            <h2>Problem 37: Count Paths in DAG</h2>
+            <p><strong>Problem Statement:</strong> Given a directed acyclic graph (DAG) with n nodes and m edges, compute the number of distinct paths from node 1 to node n modulo 10^9+7.</p>
+            
+            <h3>Input</h3>
+            <p>The first line contains two integers n and m. Each of the next m lines contains two integers u and v denoting an edge from u to v.</p>
+            
+            <h3>Output</h3>
+            <p>Print the number of distinct paths from 1 to n modulo 10^9+7.</p>
+            
+            <h3>Examples</h3>
+            <pre><code class="language-text">
+<strong>Input:</strong>
+4 5
+1 2
+1 3
+2 3
+2 4
+3 4
+
+<strong>Output:</strong>
+3
+            </code></pre>
+        </section>
+        
+        <section class="solution">
+            <h2>Solution in C++</h2>
+            <pre><code class="language-cpp">
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+
+const int MOD = 1000000007;
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, m; cin >> n >> m;
+    vector<vector<int>> adj(n+1);
+    vector<int> indegree(n+1, 0);
+    for(int i = 0; i < m; i++){
+        int u, v; cin >> u >> v;
+        adj[u].push_back(v);
+        indegree[v]++;
+    }
+    
+    vector<int> dp(n+1, 0);
+    dp[1] = 1;
+    
+    queue<int> q;
+    for(int i = 1; i <= n; i++){
+        if(indegree[i] == 0) q.push(i);
+    }
+    
+    while(!q.empty()){
+        int u = q.front(); q.pop();
+        for(int v : adj[u]){
+            dp[v] = (dp[v] + dp[u]) % MOD;
+            indegree[v]--;
+            if(indegree[v] == 0) q.push(v);
+        }
+    }
+    
+    cout << dp[n] << "\n";
+    return 0;
+}
+
+            </code></pre>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Competitive Programming Blog</p>
+    </footer>
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-cpp.min.js"></script>
+</body>
+</html>

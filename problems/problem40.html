@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Problem 40: Palindrome Partitioning Minimum Cuts - UAIC CP</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- Google Fonts for Retro Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>UAIC Competitive Programming</h1>
+        <nav>
+            <a href="../index.html">Home</a> 
+        </nav>
+    </header>
+    
+    <main>
+        <section class="problem-statement">
+            <h2>Problem 40: Palindrome Partitioning Minimum Cuts</h2>
+            <p><strong>Problem Statement:</strong> Given a string, partition it into substrings such that every substring is a palindrome. Determine the minimum number of cuts needed for such a partition. If the string is already a palindrome, no cuts are needed.</p>
+            
+            <h3>Input</h3>
+            <p>A single line containing the string.</p>
+            
+            <h3>Output</h3>
+            <p>Print the minimum number of cuts needed.</p>
+            
+            <h3>Examples</h3>
+            <pre><code class="language-text">
+<strong>Input:</strong>
+aab
+
+<strong>Output:</strong>
+1
+            </code></pre>
+        </section>
+        
+        <section class="solution">
+            <h2>Solution in C++</h2>
+            <pre><code class="language-cpp">
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+bool isPalindrome(const string &s, int i, int j) {
+    while(i < j){
+        if(s[i] != s[j]) return false;
+        i++; j--;
+    }
+    return true;
+}
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    string s; cin >> s;
+    int n = s.size();
+    vector<int> cuts(n, 0);
+    vector<vector<bool>> pal(n, vector<bool>(n, false));
+
+    for (int i = 0; i < n; i++) {
+        pal[i][i] = true;
+    }
+
+    for (int len = 2; len <= n; len++){
+        for (int i = 0; i <= n - len; i++){
+            int j = i + len - 1;
+            if(s[i] == s[j]) {
+                pal[i][j] = (len == 2) ? true : pal[i+1][j-1];
+            }
+        }
+    }
+
+    for (int i = 0; i < n; i++){
+        if(pal[0][i]) {
+            cuts[i] = 0;
+        } else {
+            int minCut = i;
+            for (int j = 0; j < i; j++){
+                if(pal[j+1][i] && 1 + cuts[j] < minCut)
+                    minCut = 1 + cuts[j];
+            }
+            cuts[i] = minCut;
+        }
+    }
+    cout << cuts[n-1] << "\n";
+    return 0;
+}
+
+            </code></pre>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Competitive Programming Blog</p>
+    </footer>
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-cpp.min.js"></script>
+</body>
+</html>

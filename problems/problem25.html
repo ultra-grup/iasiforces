@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Problem 25: Road Construction - UAIC CP</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- Google Fonts for Retro Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>UAIC Competitive Programming</h1>
+        <nav>
+            <a href="../index.html">Home</a> 
+        </nav>
+    </header>
+    
+    <main>
+        <section class="problem-statement">
+            <h2>Problem 25: Road Construction</h2>
+            <p><strong>Problem Statement:</strong> A country plans to connect all its cities by constructing roads. Given a weighted undirected graph with n nodes and m edges, compute the minimum total cost required to connect all cities (i.e., find the cost of the minimum spanning tree).</p>
+            
+            <h3>Input</h3>
+            <p>The first line contains two integers n and m. The next m lines each contain three integers u, v, and w representing an edge between u and v with weight w.</p>
+            
+            <h3>Output</h3>
+            <p>Print the total cost of constructing the roads (MST cost).</p>
+            
+            <h3>Examples</h3>
+            <pre><code class="language-text">
+<strong>Input:</strong>
+4 5
+1 2 1
+2 3 2
+3 4 3
+4 1 4
+2 4 1
+
+<strong>Output:</strong>
+4
+            </code></pre>
+        </section>
+        
+        <section class="solution">
+            <h2>Solution in C++</h2>
+            <pre><code class="language-cpp">
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+struct Edge {
+    int u, v, w;
+    bool operator<(const Edge &other) const {
+        return w < other.w;
+    }
+};
+
+int findp(int a, vector<int>& parent){
+    return parent[a] == a ? a : parent[a] = findp(parent[a], parent);
+}
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int n, m; cin >> n >> m;
+    vector<Edge> edges(m);
+    for (int i = 0; i < m; i++){
+        cin >> edges[i].u >> edges[i].v >> edges[i].w;
+    }
+    sort(edges.begin(), edges.end());
+    vector<int> parent(n+1);
+    for(int i=1; i<=n; i++) parent[i]=i;
+    long long cost = 0;
+    for(auto &e : edges){
+        int pu = findp(e.u, parent);
+        int pv = findp(e.v, parent);
+        if(pu != pv){
+            cost += e.w;
+            parent[pu] = pv;
+        }
+    }
+    cout << cost << "\n";
+    return 0;
+}
+
+            </code></pre>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Competitive Programming Blog</p>
+    </footer>
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-cpp.min.js"></script>
+</body>
+</html>

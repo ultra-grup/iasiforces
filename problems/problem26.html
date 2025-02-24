@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Problem 26: Subsequence Queries - UAIC CP</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- Google Fonts for Retro Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>UAIC Competitive Programming</h1>
+        <nav>
+            <a href="../index.html">Home</a> 
+        </nav>
+    </header>
+    
+    <main>
+        <section class="problem-statement">
+            <h2>Problem 26: Subsequence Queries</h2>
+            <p><strong>Problem Statement:</strong> Given a string S and Q queries, each query consists of a string t. For every query determine whether t is a subsequence of S.</p>
+            
+            <h3>Input</h3>
+            <p>The first line contains the string S. The second line contains an integer Q. Each of the next Q lines contains a query string t.</p>
+            
+            <h3>Output</h3>
+            <p>For each query print "YES" if it is a subsequence of S, otherwise print "NO".</p>
+            
+            <h3>Examples</h3>
+            <pre><code class="language-text">
+<strong>Input:</strong>
+abacaba
+2
+aca
+acb
+
+<strong>Output:</strong>
+YES
+NO
+            </code></pre>
+        </section>
+        
+        <section class="solution">
+            <h2>Solution in C++</h2>
+            <pre><code class="language-cpp">
+#include <iostream>
+#include <string>
+using namespace std;
+
+bool isSubsequence(const string &s, const string &t) {
+    int i = 0, j = 0;
+    while (i < s.size() && j < t.size()) {
+        if (s[i] == t[j]) j++;
+        i++;
+    }
+    return j == t.size();
+}
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    string S; 
+    getline(cin, S);
+    int Q; cin >> Q;
+    while(Q--) {
+        string t; 
+        cin >> t;
+        cout << (isSubsequence(S, t) ? "YES" : "NO") << "\n";
+    }
+    return 0;
+}
+
+            </code></pre>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Competitive Programming Blog</p>
+    </footer>
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-cpp.min.js"></script>
+</body>
+</html>

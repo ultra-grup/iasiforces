@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Problem 48: Travelling Salesman Problem - UAIC CP</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- Google Fonts for Retro Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>UAIC Competitive Programming</h1>
+        <nav>
+            <a href="../index.html">Home</a> 
+        </nav>
+    </header>
+    
+    <main>
+        <section class="problem-statement">
+            <h2>Problem 48: Travelling Salesman Problem</h2>
+            <p><strong>Problem Statement:</strong> Given a complete directed graph with n nodes (n <= 16) and a cost matrix, compute the minimum tour cost that visits every node exactly once and returns to the starting node.</p>
+            
+            <h3>Input</h3>
+            <p>The first line contains an integer n. Each of the next n lines contains n space-separated integers representing the cost matrix.</p>
+            
+            <h3>Output</h3>
+            <p>Print the minimum tour cost.</p>
+            
+            <h3>Examples</h3>
+            <pre><code class="language-text">
+<strong>Input:</strong>
+4
+0 10 15 20
+10 0 35 25
+15 35 0 30
+20 25 30 0
+
+<strong>Output:</strong>
+80
+            </code></pre>
+        </section>
+        
+        <section class="solution">
+            <h2>Solution in C++</h2>
+            <pre><code class="language-cpp">
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <limits>
+using namespace std;
+
+const int INF = 1e9;
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n; cin >> n;
+    vector<vector<int>> cost(n, vector<int>(n));
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < n; j++){
+            cin >> cost[i][j];
+        }
+    }
+    
+    int N = 1 << n;
+    vector<vector<int>> dp(N, vector<int>(n, INF));
+    dp[1][0] = 0;
+    
+    for (int mask = 1; mask < N; mask++){
+        for (int i = 0; i < n; i++){
+            if(mask & (1 << i)){
+                for (int j = 0; j < n; j++){
+                    if(!(mask & (1 << j))) {
+                        dp[mask | (1 << j)][j] = min(dp[mask | (1 << j)][j], dp[mask][i] + cost[i][j]);
+                    }
+                }
+            }
+        }
+    }
+    
+    int ans = INF;
+    for (int i = 0; i < n; i++){
+        ans = min(ans, dp[N-1][i] + cost[i][0]);
+    }
+    cout << ans << "\n";
+    return 0;
+}
+
+            </code></pre>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Competitive Programming Blog</p>
+    </footer>
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-cpp.min.js"></script>
+</body>
+</html>

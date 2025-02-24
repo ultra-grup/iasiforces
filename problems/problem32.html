@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Problem 32: Subarray Distinct Values - UAIC CP</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- Google Fonts for Retro Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>UAIC Competitive Programming</h1>
+        <nav>
+            <a href="../index.html">Home</a> 
+        </nav>
+    </header>
+    
+    <main>
+        <section class="problem-statement">
+            <h2>Problem 32: Subarray Distinct Values</h2>
+            <p><strong>Problem Statement:</strong> Given an array of n integers and a window size k, for each contiguous subarray of size k, determine the number of distinct integers in that subarray.</p>
+            
+            <h3>Input</h3>
+            <p>The first line contains two integers n and k. The second line contains n space-separated integers.</p>
+            
+            <h3>Output</h3>
+            <p>Print n-k+1 integers, where the i-th integer is the number of distinct elements in the i-th subarray of size k.</p>
+            
+            <h3>Examples</h3>
+            <pre><code class="language-text">
+<strong>Input:</strong>
+7 4
+1 2 1 3 4 2 3
+
+<strong>Output:</strong>
+3 4 4 3
+            </code></pre>
+        </section>
+        
+        <section class="solution">
+            <h2>Solution in C++</h2>
+            <pre><code class="language-cpp">
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+using namespace std;
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int n, k; cin >> n >> k;
+    vector<int> a(n);
+    for (int i=0; i<n; i++) cin >> a[i];
+    unordered_map<int,int> freq;
+    int distinct = 0;
+    for(int i = 0; i < k; i++){
+        if(freq[a[i]] == 0) distinct++;
+        freq[a[i]]++;
+    }
+    cout << distinct;
+    for(int i = k; i < n; i++){
+        freq[a[i-k]]--;
+        if(freq[a[i-k]] == 0) distinct--;
+        if(freq[a[i]] == 0) distinct++;
+        freq[a[i]]++;
+        cout << " " << distinct;
+    }
+    cout << "\n";
+    return 0;
+}
+
+            </code></pre>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Competitive Programming Blog</p>
+    </footer>
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-cpp.min.js"></script>
+</body>
+</html>

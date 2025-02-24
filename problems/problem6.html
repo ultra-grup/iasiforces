@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Problem 6: Suffix Automaton - UAIC CP</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- Google Fonts for Retro Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>UAIC Competitive Programming</h1>
+        <nav>
+            <a href="../index.html">Home</a> 
+        </nav>
+    </header>
+    
+    <main>
+        <section class="problem-statement">
+            <h2>Problem 6: Suffix Automaton</h2>
+            <p><strong>Problem Statement:</strong> Given a string S, construct its suffix automaton and then answer queries about the number of distinct substrings present in S.</p>
+            
+            <h3>Input</h3>
+            <p>A single string S is given in the first line.</p>
+            
+            <h3>Output</h3>
+            <p>Print the number of distinct substrings of S.</p>
+            
+            <h3>Examples</h3>
+            <pre><code class="language-text">
+<strong>Input:</strong>
+ababa
+
+<strong>Output:</strong>
+9
+            </code></pre>
+        </section>
+        
+        <section class="solution">
+            <h2>Solution in C++</h2>
+            <pre><code class="language-cpp">
+#include <iostream>
+#include <vector>
+#include <map>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+struct State {
+    int len, link;
+    map<char,int> next;
+};
+
+vector<State> st;
+int sz, last;
+
+void sa_init(int n){
+    st.resize(2*n);
+    st[0].len = 0;
+    st[0].link = -1;
+    sz = 1;
+    last = 0;
+}
+
+void sa_extend(char c){
+    int cur = sz++;
+    st[cur].len = st[last].len + 1;
+    int p = last;
+    for(; p != -1 && !st[p].next.count(c); p = st[p].link) {
+        st[p].next[c] = cur;
+    }
+    if(p == -1) {
+        st[cur].link = 0;
+    } else {
+        int q = st[p].next[c];
+        if(st[p].len + 1 == st[q].len) {
+            st[cur].link = q;
+        } else {
+            int clone = sz++;
+            st[clone].len = st[p].len + 1;
+            st[clone].next = st[q].next;
+            st[clone].link = st[q].link;
+            for(; p != -1 && st[p].next[c] == q; p = st[p].link)
+                st[p].next[c] = clone;
+            st[q].link = st[cur].link = clone;
+        }
+    }
+    last = cur;
+}
+
+int main(){
+    string s;
+    cin >> s;
+    sa_init(s.size());
+    for(char c : s)
+        sa_extend(c);
+    long long distinct = 0;
+    for (int i = 1; i < sz; i++) {
+        distinct += st[i].len - st[st[i].link].len;
+    }
+    cout << distinct;
+    return 0;
+}
+            </code></pre>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Competitive Programming Blog</p>
+    </footer>
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-cpp.min.js"></script>
+</body>
+</html>

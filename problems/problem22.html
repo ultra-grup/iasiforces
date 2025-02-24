@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Problem 22: Maximum Subarray Sum Modulo - UAIC CP</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- Google Fonts for Retro Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>UAIC Competitive Programming</h1>
+        <nav>
+            <a href="../index.html">Home</a> 
+        </nav>
+    </header>
+    
+    <main>
+        <section class="problem-statement">
+            <h2>Problem 22: Maximum Subarray Sum Modulo</h2>
+            <p><strong>Problem Statement:</strong> Given an array of n integers and an integer m, find the maximum value of the sum of a subarray modulo m.</p>
+            
+            <h3>Input</h3>
+            <p>The first line contains two integers n and m. The second line contains n space‐separated integers.</p>
+            
+            <h3>Output</h3>
+            <p>Print the maximum subarray sum modulo m.</p>
+            
+            <h3>Examples</h3>
+            <pre><code class="language-text">
+<strong>Input:</strong>
+3 7
+3 3 9
+
+<strong>Output:</strong>
+6
+            </code></pre>
+        </section>
+        
+        <section class="solution">
+            <h2>Solution in C++</h2>
+            <pre><code class="language-cpp">
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    long long n, m; cin >> n >> m;
+    vector<long long> a(n);
+    for(int i = 0; i < n; i++)
+        cin >> a[i];
+    
+    set<long long> prefixSet;
+    long long ans = 0, prefix = 0;
+    prefixSet.insert(0);
+    for (int i = 0; i < n; i++){
+        prefix = (prefix + a[i]) % m;
+        ans = max(ans, prefix);
+        auto it = prefixSet.lower_bound(prefix + 1);
+        if(it != prefixSet.end()){
+            ans = max(ans, (prefix - *it + m) % m);
+        }
+        prefixSet.insert(prefix);
+    }
+    cout << ans << "\n";
+    return 0;
+}
+
+            </code></pre>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Competitive Programming Blog</p>
+    </footer>
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-cpp.min.js"></script>
+</body>
+</html>

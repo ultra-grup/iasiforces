@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Problem 12: Lowest Common Ancestor (Binary Lifting) - UAIC CP</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- Google Fonts for Retro Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>UAIC Competitive Programming</h1>
+        <nav>
+            <a href="../index.html">Home</a> 
+        </nav>
+    </header>
+    
+    <main>
+        <section class="problem-statement">
+            <h2>Problem 12: Lowest Common Ancestor (Binary Lifting)</h2>
+            <p><strong>Problem Statement:</strong> Given a tree and multiple queries, determine the lowest common ancestor (LCA) of two nodes using binary lifting technique.</p>
+            
+            <h3>Input</h3>
+            <p>The first line contains n and q. Next n-1 lines contain two integers u and v representing an edge. Then q lines follow, each containing two nodes for which LCA is required.</p>
+            
+            <h3>Output</h3>
+            <p>For each query, print the LCA of the given nodes.</p>
+            
+            <h3>Examples</h3>
+            <pre><code class="language-text">
+<strong>Input:</strong>
+7 3\n1 2\n1 3\n2 4\n2 5\n3 6\n3 7\n4 5\n4 6\n3 4
+
+<strong>Output:</strong>
+2\n1\n1
+            </code></pre>
+        </section>
+        
+        <section class="solution">
+            <h2>Solution in C++</h2>
+            <pre><code class="language-cpp">
+#include <iostream>
+#include <vector>
+#include <cmath>
+using namespace std;
+
+const int MAXN = 100005;
+int up[MAXN][20], depth[MAXN];
+vector<int> adj[MAXN];
+
+void dfs(int u, int p){
+    up[u][0] = p;
+    for(int i=1; i<20; i++){
+        if(up[u][i-1] != -1)
+            up[u][i] = up[up[u][i-1]][i-1];
+        else 
+            up[u][i] = -1;
+    }
+    for(auto v : adj[u]){
+        if(v != p){
+            depth[v] = depth[u] + 1;
+            dfs(v, u);
+        }
+    }
+}
+
+int lca(int u, int v){
+    if(depth[u] < depth[v]) swap(u, v);
+    int d = depth[u] - depth[v];
+    for(int i=0;i<20;i++){
+        if(d & (1<<i))
+            u = up[u][i];
+    }
+    if(u == v) return u;
+    for(int i=19;i>=0;i--){
+        if(up[u][i] != up[v][i]){
+            u = up[u][i];
+            v = up[v][i];
+        }
+    }
+    return up[u][0];
+}
+
+int main(){
+    int n, q;
+    cin >> n >> q;
+    for(int i=1;i<=n;i++) adj[i].clear();
+    for(int i=1;i<n;i++){
+        int u, v; cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    depth[1] = 0;
+    dfs(1, -1);
+    while(q--) {
+        int u, v; cin >> u >> v;
+        cout << lca(u, v) << "\n";
+    }
+    return 0;
+}
+            </code></pre>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Competitive Programming Blog</p>
+    </footer>
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-cpp.min.js"></script>
+</body>
+</html>

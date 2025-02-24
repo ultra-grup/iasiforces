@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Problem 31: Interleaving Strings - UAIC CP</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- Google Fonts for Retro Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>UAIC Competitive Programming</h1>
+        <nav>
+            <a href="../index.html">Home</a> 
+        </nav>
+    </header>
+    
+    <main>
+        <section class="problem-statement">
+            <h2>Problem 31: Interleaving Strings</h2>
+            <p><strong>Problem Statement:</strong> Given three strings a, b, and c, determine if c is formed by interleaving the characters of a and b in a way that maintains the left-to-right ordering of the characters from a and from b.</p>
+            
+            <h3>Input</h3>
+            <p>The first line contains string a, the second line contains string b and the third line contains string c.</p>
+            
+            <h3>Output</h3>
+            <p>Print "YES" if c is a valid interleaving of a and b, otherwise print "NO".</p>
+            
+            <h3>Examples</h3>
+            <pre><code class="language-text">
+<strong>Input:</strong>
+abc
+def
+adbcef
+
+<strong>Output:</strong>
+YES
+            </code></pre>
+        </section>
+        
+        <section class="solution">
+            <h2>Solution in C++</h2>
+            <pre><code class="language-cpp">
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    string a, b, c;
+    cin >> a >> b >> c;
+    int n = a.size(), m = b.size();
+    if(c.size() != n + m){
+        cout << "NO\n";
+        return 0;
+    }
+    vector<vector<bool>> dp(n+1, vector<bool>(m+1, false));
+    dp[0][0] = true;
+    for(int i = 0; i <= n; i++){
+        for(int j = 0; j <= m; j++){
+            if(i + j == 0) continue;
+            if(i > 0 && a[i-1] == c[i+j-1]) dp[i][j] = dp[i][j] || dp[i-1][j];
+            if(j > 0 && b[j-1] == c[i+j-1]) dp[i][j] = dp[i][j] || dp[i][j-1];
+        }
+    }
+    cout << (dp[n][m] ? "YES" : "NO") << "\n";
+    return 0;
+}
+
+            </code></pre>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Competitive Programming Blog</p>
+    </footer>
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-cpp.min.js"></script>
+</body>
+</html>

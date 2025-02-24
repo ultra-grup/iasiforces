@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Problem 3: Matrix Exponentiation for Fibonacci Numbers - UAIC CP</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- Google Fonts for Retro Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>UAIC Competitive Programming</h1>
+        <nav>
+            <a href="../index.html">Home</a> 
+        </nav>
+    </header>
+    
+    <main>
+        <section class="problem-statement">
+            <h2>Problem 3: Matrix Exponentiation for Fibonacci Numbers</h2>
+            <p><strong>Problem Statement:</strong> Compute the n-th Fibonacci number modulo 10^9+7 using matrix exponentiation.</p>
+            
+            <h3>Input</h3>
+            <p>A single integer n.</p>
+            
+            <h3>Output</h3>
+            <p>Print the n-th Fibonacci number modulo 10^9+7.</p>
+            
+            <h3>Examples</h3>
+            <pre><code class="language-text">
+<strong>Input:</strong>
+10
+
+<strong>Output:</strong>
+55
+            </code></pre>
+        </section>
+        
+        <section class="solution">
+            <h2>Solution in C++</h2>
+            <pre><code class="language-cpp">
+#include <iostream>
+#include <vector>
+using namespace std;
+
+const long long MOD = 1000000007;
+
+struct Matrix {
+    long long m[2][2];
+};
+
+Matrix mul(const Matrix &A, const Matrix &B){
+    Matrix C = {{{0,0},{0,0}}};
+    for(int i=0;i<2;i++){
+        for(int j=0;j<2;j++){
+            for(int k=0;k<2;k++){
+                C.m[i][j] = (C.m[i][j] + A.m[i][k]*B.m[k][j]) % MOD;
+            }
+        }
+    }
+    return C;
+}
+
+Matrix power(Matrix A, long long n){
+    Matrix result = {{{1,0},{0,1}}};
+    while(n){
+        if(n & 1) result = mul(result, A);
+        A = mul(A, A);
+        n /= 2;
+    }
+    return result;
+}
+
+int main(){
+    long long n; cin >> n;
+    if(n == 0) { cout << 0; return 0; }
+    Matrix F = {{{1,1},{1,0}}};
+    F = power(F, n-1);
+    cout << F.m[0][0];
+    return 0;
+}
+            </code></pre>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Competitive Programming Blog</p>
+    </footer>
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-cpp.min.js"></script>
+</body>
+</html>

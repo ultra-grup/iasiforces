@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Problem 4: Maximum Flow (Edmonds-Karp) - UAIC CP</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- Google Fonts for Retro Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>UAIC Competitive Programming</h1>
+        <nav>
+            <a href="../index.html">Home</a> 
+        </nav>
+    </header>
+    
+    <main>
+        <section class="problem-statement">
+            <h2>Problem 4: Maximum Flow (Edmonds-Karp)</h2>
+            <p><strong>Problem Statement:</strong> Given a flow network, compute the maximum flow from source to sink using the Edmonds-Karp algorithm.</p>
+            
+            <h3>Input</h3>
+            <p>First line contains n and m, number of vertices and edges. Following m lines contain three integers u, v, capacity. Last line contains source and sink vertices.</p>
+            
+            <h3>Output</h3>
+            <p>Print the maximum possible flow from source to sink.</p>
+            
+            <h3>Examples</h3>
+            <pre><code class="language-text">
+<strong>Input:</strong>
+4 5\n0 1 100\n0 2 100\n1 2 1\n1 3 100\n2 3 100\n0 3
+
+<strong>Output:</strong>
+200
+            </code></pre>
+        </section>
+        
+        <section class="solution">
+            <h2>Solution in C++</h2>
+            <pre><code class="language-cpp">
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <cstring>
+using namespace std;
+
+const int MAX = 1000;
+
+struct Edge{
+    int v, capacity, flow, rev;
+};
+
+vector<Edge> adj[MAX];
+
+void addEdge(int u, int v, int cap){
+    Edge a{v, cap, 0, (int)adj[v].size()};
+    Edge b{u, 0, 0, (int)adj[u].size()};
+    adj[u].push_back(a);
+    adj[v].push_back(b);
+}
+
+bool bfs(int s, int t, vector<int> &parent, vector<int> &parentEdge){
+    vector<bool> visited(MAX, false);
+    queue<int> q;
+    q.push(s);
+    visited[s] = true;
+    parent[s] = -1;
+    while(!q.empty()){
+        int u = q.front(); q.pop();
+        for(int i=0; i<adj[u].size(); i++){
+            Edge &e = adj[u][i];
+            if(!visited[e.v] && e.capacity - e.flow > 0){
+                q.push(e.v);
+                parent[e.v] = u;
+                parentEdge[e.v] = i;
+                visited[e.v] = true;
+                if(e.v == t) return true;
+            }
+        }
+    }
+    return false;
+}
+
+int main(){
+    int n, m;
+    cin >> n >> m;
+    for(int i=0;i<m;i++){
+        int u, v, cap;
+        cin >> u >> v >> cap;
+        addEdge(u, v, cap);
+    }
+    int s, t;
+    cin >> s >> t;
+    int maxFlow = 0;
+    vector<int> parent(MAX), parentEdge(MAX);
+    while(bfs(s, t, parent, parentEdge)){
+        int path_flow = 1e9;
+        for(int v = t; v != s; v = parent[v]){
+            int u = parent[v];
+            path_flow = min(path_flow, adj[u][parentEdge[v]].capacity - adj[u][parentEdge[v]].flow);
+        }
+        for(int v = t; v != s; v = parent[v]){
+            int u = parent[v];
+            adj[u][parentEdge[v]].flow += path_flow;
+            int rev = adj[u][parentEdge[v]].rev;
+            adj[v][rev].flow -= path_flow;
+        }
+        maxFlow += path_flow;
+    }
+    cout << maxFlow;
+    return 0;
+}
+            </code></pre>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Competitive Programming Blog</p>
+    </footer>
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-cpp.min.js"></script>
+</body>
+</html>
